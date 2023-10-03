@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from 'styled-components'
+
+import About from './containers/About'
+import Projects from './containers/Projects'
+import Sidebar from './containers/Sidebar'
+import EstiloGlobal, { Container } from './styles'
+import Light from './themes/light'
+import Dark from './themes/dark'
+import { useState } from 'react'
 
 function App() {
+  const [darkTheme, setDarkTheme] = useState(false)
+
+  function toggleTheme() {
+    setDarkTheme(!darkTheme)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={darkTheme ? Dark : Light}>
+      <EstiloGlobal />
+      <Container>
+        <Sidebar toggleTheme={toggleTheme} />
+        <main>
+          <About />
+          <Projects />
+        </main>
+      </Container>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
